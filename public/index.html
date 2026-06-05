@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinelion — Kinetic Meets Adaptability</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:        #0D7377;
+    --teal-light:  #14A8AD;
+    --teal-dark:   #085255;
+    --slate:       #2E3A45;
+    --slate-mid:   #4A5A68;
+    --slate-light: #8A9BAA;
+    --gold:        #C8A96E;
+    --warm-white:  #F5F7F6;
+    --white:       #FFFFFF;
+    --bg:          #F5F7F6;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--slate);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(245,247,246,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(13,115,119,.1);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: .6rem;
+    text-decoration: none;
+  }
+  .nav-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -.02em;
+    color: var(--teal-dark);
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: .875rem;
+    font-weight: 500;
+    color: var(--slate-mid);
+    text-decoration: none;
+    letter-spacing: .02em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    background: var(--teal);
+    color: var(--white) !important;
+    padding: .6rem 1.4rem;
+    border-radius: 4px;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--teal-dark) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 24px; height: 2px;
+    background: var(--teal);
+  }
+  .hero-h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+    line-height: 1.06;
+    letter-spacing: -.03em;
+    color: var(--teal-dark);
+    margin-bottom: 1.5rem;
+  }
+  .hero-h1 em {
+    font-style: normal;
+    color: var(--teal);
+  }
+  .hero-sub {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--slate-mid);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--white);
+    padding: .9rem 2rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    border: none; cursor: pointer;
+    text-decoration: none;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+    letter-spacing: .01em;
+  }
+  .btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--teal-dark);
+    font-size: .9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1.5px solid rgba(13,115,119,.3);
+    padding: .85rem 1.75rem;
+    border-radius: 4px;
+    transition: border-color .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-stats {
+    margin-top: 3.5rem;
+    display: flex; align-items: center; gap: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(13,115,119,.12);
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--teal-dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: .7rem;
+    color: var(--slate-light);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-top: .25rem;
+  }
+  .stat-divider {
+    width: 1px; height: 36px;
+    background: rgba(13,115,119,.15);
+  }
+
+  /* HERO RIGHT */
+  .hero-right {
+    background: var(--teal-dark);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 40% 30%, rgba(20,168,173,.3) 0%, transparent 65%),
+                radial-gradient(ellipse at 80% 80%, rgba(200,169,110,.12) 0%, transparent 50%);
+  }
+  .hero-mark-wrap {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 2rem;
+    padding: 4rem;
+  }
+  .hero-mark-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 20px;
+    padding: 3rem 3.5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+    backdrop-filter: blur(8px);
+  }
+  .hero-mark-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: -.02em;
+  }
+  .hero-mark-tag {
+    font-size: .62rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    font-weight: 600;
+  }
+  .floating-pill {
+    position: absolute;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 100px;
+    padding: .5rem 1.1rem;
+    font-size: .75rem;
+    color: rgba(255,255,255,.8);
+    letter-spacing: .04em;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+  }
+  .pill-1 { top: 16%; left: 8%; animation: drift 6s ease-in-out infinite; }
+  .pill-2 { top: 24%; right: 6%; animation: drift 7s ease-in-out infinite reverse; }
+  .pill-3 { bottom: 22%; left: 6%; animation: drift 5s ease-in-out infinite 1s; }
+  .pill-4 { bottom: 16%; right: 8%; animation: drift 8s ease-in-out infinite .5s; }
+  @keyframes drift {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; }
+  .section-eyebrow {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: .75rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block;
+    width: 20px; height: 2px;
+    background: var(--teal);
+  }
+  .section-h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.75rem, 2.8vw, 2.4rem);
+    letter-spacing: -.025em;
+    color: var(--teal-dark);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--slate-mid);
+    font-weight: 300;
+    max-width: 520px;
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .about-visual {
+    background: var(--teal-dark);
+    border-radius: 12px;
+    padding: 3.5rem;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(20,168,173,.25) 0%, transparent 60%);
+  }
+  .about-visual-content {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    text-align: center;
+  }
+  .about-quote {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--white);
+    line-height: 1.5;
+    text-align: center;
+  }
+  .about-cite {
+    font-size: .72rem;
+    color: var(--teal-light);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .about-text .section-sub { max-width: 100%; }
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--slate-mid);
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  /* PRODUCTS */
+  .products { background: var(--bg); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .product-card {
+    background: var(--white);
+    border: 1px solid rgba(13,115,119,.1);
+    border-radius: 10px;
+    padding: 2.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--teal);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 48px rgba(13,115,119,.1);
+    border-color: rgba(13,115,119,.25);
+  }
+  .product-card:hover::before { transform: scaleX(1); }
+  .product-icon {
+    width: 48px; height: 48px;
+    background: rgba(13,115,119,.08);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .product-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--teal-dark);
+    margin-bottom: .5rem;
+  }
+  .product-desc {
+    font-size: .875rem;
+    line-height: 1.7;
+    color: var(--slate-mid);
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  .product-badge {
+    display: inline-block;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(13,115,119,.08);
+    padding: .25rem .75rem;
+    border-radius: 100px;
+  }
+  .product-badge.flagship {
+    color: var(--gold);
+    background: rgba(200,169,110,.1);
+  }
+
+  /* FOUNDER */
+  .founder {
+    background: var(--teal-dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+  .founder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(20,168,173,.2) 0%, transparent 55%);
+  }
+  .founder-text { position: relative; z-index: 1; }
+  .founder-text .section-eyebrow { color: var(--teal-light); }
+  .founder-text .section-eyebrow::before { background: var(--teal-light); }
+  .founder-text .section-h2 { color: var(--white); }
+  .founder-body {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,.7);
+    font-weight: 300;
+    margin-top: 1.25rem;
+  }
+  .founder-body p { margin-bottom: 1.25rem; }
+  .founder-body p:last-child { margin-bottom: 0; }
+  .founder-cards { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1rem; }
+  .founder-quote-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 1.75rem;
+    backdrop-filter: blur(8px);
+  }
+  .founder-quote-card blockquote {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--white);
+    line-height: 1.55;
+  }
+  .founder-quote-card cite {
+    display: block;
+    margin-top: .75rem;
+    font-size: .7rem;
+    color: var(--teal-light);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-style: normal;
+  }
+  .founder-stat-row {
+    display: flex; gap: 1.5rem;
+  }
+  .founder-stat {
+    flex: 1;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .founder-stat .num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .founder-stat .lbl {
+    font-size: .68rem;
+    color: rgba(255,255,255,.5);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-top: .35rem;
+  }
+
+  /* WHO WE SERVE */
+  .serve { background: var(--white); }
+  .serve-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .serve-card {
+    background: var(--bg);
+    border: 1px solid rgba(46,58,69,.08);
+    border-radius: 10px;
+    padding: 2rem;
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .serve-card:hover {
+    border-color: rgba(13,115,119,.2);
+    box-shadow: 0 8px 32px rgba(13,115,119,.07);
+  }
+  .serve-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: rgba(13,115,119,.12);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .serve-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--teal-dark);
+    margin-bottom: .4rem;
+  }
+  .serve-content p {
+    font-size: .875rem;
+    line-height: 1.7;
+    color: var(--slate-mid);
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--bg);
+    text-align: center;
+    padding: 7rem 4rem;
+  }
+  .contact .section-eyebrow { justify-content: center; }
+  .contact .section-eyebrow::before { display: none; }
+  .contact .section-h2 { margin: 0 auto .75rem; }
+  .contact .section-sub { margin: 0 auto 2.5rem; text-align: center; }
+  .contact-form {
+    display: flex; gap: .75rem; justify-content: center;
+    flex-wrap: wrap; max-width: 500px; margin: 0 auto 1.5rem;
+  }
+  .contact-input {
+    flex: 1; min-width: 220px;
+    padding: .9rem 1.25rem;
+    border: 1.5px solid rgba(13,115,119,.2);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    background: var(--white);
+    color: var(--slate);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .contact-input:focus { border-color: var(--teal); }
+  .contact-input::placeholder { color: var(--slate-light); }
+  .contact-note {
+    font-size: .78rem;
+    color: var(--slate-light);
+    letter-spacing: .02em;
+    margin-top: .5rem;
+  }
+  .contact-options {
+    display: flex; gap: 1rem; justify-content: center;
+    flex-wrap: wrap; margin-top: 2rem;
+  }
+  .contact-option {
+    background: var(--white);
+    border: 1px solid rgba(13,115,119,.12);
+    border-radius: 8px;
+    padding: 1.25rem 1.75rem;
+    text-align: center;
+    flex: 1; min-width: 180px; max-width: 220px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .contact-option:hover {
+    border-color: rgba(13,115,119,.3);
+    box-shadow: 0 4px 16px rgba(13,115,119,.08);
+  }
+  .contact-option-icon {
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+  }
+  .contact-option-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .85rem;
+    color: var(--teal-dark);
+    margin-bottom: .25rem;
+  }
+  .contact-option-desc {
+    font-size: .75rem;
+    color: var(--slate-light);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--slate);
+    padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    display: flex; flex-direction: column; align-items: flex-start; gap: .4rem;
+  }
+  .footer-logo-mark {
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .footer-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: -.02em;
+  }
+  .footer-tag {
+    font-size: .62rem;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-links a {
+    font-size: .8rem;
+    color: rgba(255,255,255,.45);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--teal-light); }
+  .footer-copy {
+    font-size: .75rem;
+    color: rgba(255,255,255,.3);
+  }
+
+  /* FADE UP */
+  .fade-up {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 340px; }
+    .hero-left { padding: 3rem 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .about, .founder { grid-template-columns: 1fr; gap: 2.5rem; }
+    .products-grid { grid-template-columns: 1fr; }
+    .serve-grid { grid-template-columns: 1fr; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; }
+    .contact { padding: 4rem 1.5rem; }
+    .founder-stat-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="32" height="40" viewBox="0 0 50 62" fill="none">
+      <line x1="12" y1="4" x2="12" y2="58" stroke="#085255" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="56" stroke="#085255" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-wordmark">Kinelion</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#founder">Our Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Partner With Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Institutional Adaptive Solutions</div>
+    <h1 class="hero-h1">
+      Kinetic meets<br><em>adaptability.</em><br>Built for every body.
+    </h1>
+    <p class="hero-sub">
+      Kinelion designs professional-grade adaptive equipment for rehabilitation hospitals, occupational therapy clinics, and physical therapy centers. Engineered for dignity, independence, and clinical performance.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request a Partnership</a>
+      <a href="#products" class="btn-ghost">View Products</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">B2B</span>
+        <span class="stat-label">Institutional First</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">OT</span>
+        <span class="stat-label">Clinically Designed</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">SCI</span>
+        <span class="stat-label">Founder Led</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <span class="floating-pill pill-1">Adaptive Gauntlet</span>
+    <span class="floating-pill pill-2">Hospital Grade</span>
+    <span class="floating-pill pill-3">Modular System</span>
+    <span class="floating-pill pill-4">OT Approved</span>
+    <div class="hero-mark-wrap">
+      <div class="hero-mark-card">
+        <svg width="80" height="100" viewBox="0 0 50 62" fill="none">
+          <line x1="12" y1="4" x2="12" y2="58" stroke="white" stroke-width="8" stroke-linecap="round"/>
+          <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+          <line x1="12" y1="32" x2="44" y2="56" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+        <div class="hero-mark-name">Kinelion</div>
+        <div class="hero-mark-tag">Kinetic · Adaptive · Unbound</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual fade-up">
+    <div class="about-visual-content">
+      <svg width="64" height="80" viewBox="0 0 50 62" fill="none">
+        <line x1="12" y1="4" x2="12" y2="58" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+        <line x1="12" y1="32" x2="44" y2="56" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+      <p class="about-quote">"Dignity should not be a feature. It should be the foundation of every product we make."</p>
+      <span class="about-cite">Victor Landing, Founder</span>
+    </div>
+  </div>
+  <div class="about-text fade-up">
+    <div class="section-eyebrow">About Kinelion</div>
+    <h2 class="section-h2">The adaptive equipment industry needed a rethink.</h2>
+    <p>For too long, adaptive tools have been designed around a clinical minimum. They function. They fulfill a requirement. But they fail the people who use them every day in ways that matter most: they look institutional, feel limiting, and are built by people who have never had to rely on them.</p>
+    <p>Kinelion was founded to correct that. Working directly with occupational therapy specialists and applying the principles of functional programming, we design adaptive solutions that meet the standard of the people who use them, not just the facilities that stock them.</p>
+    <p>Our B2B approach means we start where the need is most concentrated: rehabilitation hospitals, outpatient therapy clinics, and long-term care facilities. Every product we bring to market is tested, refined, and validated in real clinical environments before it reaches the people who need it.</p>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-eyebrow">Our Solutions</div>
+  <h2 class="section-h2">A complete adaptive ecosystem.</h2>
+  <p class="section-sub">Every Kinelion product is co-designed with occupational therapists and developed by someone with lived tetraplegic experience. Function, durability, and dignity are non-negotiable.</p>
+
+  <div class="products-grid">
+    <div class="product-card fade-up">
+      <div class="product-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D7377" stroke-width="2" stroke-linecap="round">
+          <path d="M9 3 C9 3 6 5 6 9 L6 19 Q6 21 9 21 L15 21 Q18 21 18 19 L18 9 C18 5 15 3 15 3"/>
+          <path d="M9 3 L15 3"/>
+          <path d="M8 12 L16 12"/>
+          <path d="M8 16 L14 16"/>
+        </svg>
+      </div>
+      <div class="product-name">Kinelion Gauntlet</div>
+      <p class="product-desc">Our flagship modular hand orthosis system. A single platform that accepts interchangeable attachments including cutlery, pens, fitness grips, and custom clinical tools. Designed for tetraplegics and individuals with limited hand dexterity.</p>
+      <span class="product-badge flagship">Flagship Product</span>
+    </div>
+
+    <div class="product-card fade-up">
+      <div class="product-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D7377" stroke-width="2" stroke-linecap="round">
+          <path d="M3 12 L7 12 L9 6 L12 18 L15 10 L17 12 L21 12"/>
+        </svg>
+      </div>
+      <div class="product-name">Adaptive Cutlery Line</div>
+      <p class="product-desc">Weighted, angled, and ergonomically engineered utensils for individuals with limited grip strength or hand control. Medical-grade materials, dishwasher safe, and designed to restore the simple dignity of an independent meal.</p>
+      <span class="product-badge">In Development</span>
+    </div>
+
+    <div class="product-card fade-up">
+      <div class="product-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D7377" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="5" r="2"/>
+          <path d="M12 7 L12 14"/>
+          <path d="M8 10 L16 10"/>
+          <path d="M10 14 L8 20"/>
+          <path d="M14 14 L16 20"/>
+        </svg>
+      </div>
+      <div class="product-name">Adaptive Fitness Solutions</div>
+      <p class="product-desc">Resistance systems, grip attachments, and cable machine adaptors built specifically for wheelchair users and individuals with upper body dexterity limitations. Because active living should have no ceiling.</p>
+      <span class="product-badge">In Development</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder" id="founder">
+  <div class="founder-text fade-up">
+    <div class="section-eyebrow">Founded From Experience</div>
+    <h2 class="section-h2" style="color:var(--white);">Built by someone who lives it every day.</h2>
+    <div class="founder-body">
+      <p>Victor Landing has lived with tetraplegia for over a decade. Before his diagnosis, he founded a private personal training practice built around functional programming: identifying and addressing what the body truly needs, not just what the client asks for. His clients included executives, artists, and professionals who trusted him with their physical development in a space designed entirely around their privacy and goals.</p>
+      <p>When existing adaptive equipment failed to keep pace with his active lifestyle, Victor did what he had always done. He engineered a better way. The first device he built was a wrist strap with a hook that allowed him to attach to cable systems at the gym. It broke under load. He rebuilt it stronger. That cycle of building, failing, and improving became the foundation of Kinelion.</p>
+      <p>Kinelion applies the same functional programming philosophy that defined his training practice, now combined with occupational therapy expertise, to build adaptive solutions that treat users as athletes and individuals, not patients to be accommodated.</p>
+    </div>
+  </div>
+  <div class="founder-cards fade-up">
+    <div class="founder-quote-card">
+      <blockquote>"I got tired of waiting for someone else to solve a problem I live with every day. So I started solving it myself."</blockquote>
+      <cite>Victor Landing, Founder and CEO</cite>
+    </div>
+    <div class="founder-quote-card">
+      <blockquote>"In five years, I want to walk into a rehabilitation clinic and see Kinelion products in the hands of the people who need them most. That is what success looks like."</blockquote>
+      <cite>Victor Landing, Founder and CEO</cite>
+    </div>
+    <div class="founder-stat-row">
+      <div class="founder-stat">
+        <div class="num">10+</div>
+        <div class="lbl">Years Lived Experience</div>
+      </div>
+      <div class="founder-stat">
+        <div class="num">OT</div>
+        <div class="lbl">Co-Designed</div>
+      </div>
+      <div class="founder-stat">
+        <div class="num">SCI</div>
+        <div class="lbl">Founder Led</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE SERVE -->
+<section class="serve" id="serve">
+  <div class="section-eyebrow">Who We Serve</div>
+  <h2 class="section-h2">Built for institutions.<br>Designed for individuals.</h2>
+  <div class="serve-grid">
+    <div class="serve-card fade-up">
+      <div class="serve-num">01</div>
+      <div class="serve-content">
+        <h3>Inpatient Rehabilitation Hospitals</h3>
+        <p>Kinelion products integrate directly into occupational therapy programs, giving rehab hospitals a premium adaptive toolkit for spinal cord injury, stroke, and trauma recovery patients.</p>
+      </div>
+    </div>
+    <div class="serve-card fade-up">
+      <div class="serve-num">02</div>
+      <div class="serve-content">
+        <h3>Outpatient PT and OT Clinics</h3>
+        <p>Our modular gauntlet system is built for high-rotation clinical environments. Durable, sterilizable, and configurable for each patient's specific dexterity needs and therapy goals.</p>
+      </div>
+    </div>
+    <div class="serve-card fade-up">
+      <div class="serve-num">03</div>
+      <div class="serve-content">
+        <h3>Skilled Nursing and Long-Term Care</h3>
+        <p>Supporting the elderly and individuals with progressive mobility conditions through daily living adaptive tools that preserve independence and restore a sense of normalcy.</p>
+      </div>
+    </div>
+    <div class="serve-card fade-up">
+      <div class="serve-num">04</div>
+      <div class="serve-content">
+        <h3>Consumer Line Coming Soon</h3>
+        <p>Kinelion will expand directly to individuals and caregivers, bringing the same institutional-grade quality into homes, gyms, and everyday life on their own terms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-eyebrow">Partner With Kinelion</div>
+  <h2 class="section-h2">Ready to bring Kinelion into your facility?</h2>
+  <p class="section-sub">We are currently onboarding our founding institutional partners. Rehabilitation hospitals, OT clinics, and care facilities who want to be first. Leave your contact and we will be in touch within 48 hours.</p>
+
+  <div class="contact-form">
+    <input type="email" class="contact-input" placeholder="Your institutional email address">
+    <button class="btn-primary">Request Partnership</button>
+  </div>
+  <p class="contact-note">For product inquiries, clinical evaluations, or press, use the options below.</p>
+
+  <div class="contact-options">
+    <div class="contact-option">
+      <div class="contact-option-icon">🏥</div>
+      <div class="contact-option-title">Hospital Partners</div>
+      <p class="contact-option-desc">Rehabilitation hospitals and inpatient facilities</p>
+    </div>
+    <div class="contact-option">
+      <div class="contact-option-icon">🩺</div>
+      <div class="contact-option-title">OT and PT Clinics</div>
+      <p class="contact-option-desc">Outpatient therapy and occupational therapy centers</p>
+    </div>
+    <div class="contact-option">
+      <div class="contact-option-icon">📋</div>
+      <div class="contact-option-title">Clinical Evaluation</div>
+      <p class="contact-option-desc">Request product samples for clinical review</p>
+    </div>
+    <div class="contact-option">
+      <div class="contact-option-icon">📰</div>
+      <div class="contact-option-title">Press and Media</div>
+      <p class="contact-option-desc">Media inquiries and founder interviews</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-mark">
+      <svg width="24" height="30" viewBox="0 0 50 62" fill="none">
+        <line x1="12" y1="4" x2="12" y2="58" stroke="white" stroke-width="8" stroke-linecap="round"/>
+        <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+        <line x1="12" y1="32" x2="44" y2="56" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      </svg>
+      <span class="footer-name">Kinelion</span>
+    </div>
+    <span class="footer-tag">Kinetic · Adaptive · Unbound</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#founder">Our Story</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">2026 Kinelion. All rights reserved.</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
