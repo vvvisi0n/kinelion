@@ -59,6 +59,8 @@
     transition: color .2s;
   }
   .nav-links a:hover { color: var(--teal); }
+  .nav-links a.active { color: var(--teal); font-weight: 600; }
+  .nav-links a.active { color: var(--teal); font-weight: 600; }
   .nav-cta {
     background: var(--teal);
     color: var(--white) !important;
@@ -920,6 +922,83 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.style.color = 'var(--teal)';
+          }
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => navObserver.observe(s));
+
+  function animateCounter(el, target, suffix) {
+    let start = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      el.textContent = Math.floor(progress * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const raw = el.getAttribute('data-count');
+        const suffix = el.getAttribute('data-suffix') || '';
+        if (raw) animateCounter(el, parseInt(raw), suffix);
+        statsObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => statsObserver.observe(el));
+
+  const formBtn = document.querySelector('.contact-form .btn-primary');
+  const emailInput = document.querySelector('.contact-input');
+  if (formBtn && emailInput) {
+    formBtn.addEventListener('click', () => {
+      if (emailInput.value && emailInput.value.includes('@')) {
+        formBtn.textContent = 'Request Sent';
+        formBtn.style.background = 'var(--teal-dark)';
+        formBtn.style.pointerEvents = 'none';
+        emailInput.value = '';
+        emailInput.placeholder = 'We will be in touch within 48 hours.';
+      } else {
+        emailInput.style.borderColor = '#e53e3e';
+        emailInput.placeholder = 'Please enter a valid email address.';
+        setTimeout(() => {
+          emailInput.style.borderColor = '';
+          emailInput.placeholder = 'Your institutional email address';
+        }, 2000);
+      }
+    });
+  }
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-4px)');
+    card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0)');
+  });
+
+  document.querySelectorAll('.serve-card').forEach(card => {
+    card.addEventListener('mouseenter', () => { card.style.transform = 'translateY(-2px)'; card.style.transition = 'transform .2s ease'; });
+    card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0)');
+  });
+
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(0,0,0,.08)' : 'none';
+  });
 </script>
 </body>
 </html>
