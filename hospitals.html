@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinelion: Hospital Partners</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root{--teal:#0D7377;--teal-light:#14A8AD;--teal-dark:#085255;--slate:#2E3A45;--slate-mid:#4A5A68;--slate-light:#8A9BAA;--gold:#C8A96E;--warm-white:#F5F7F6;--white:#FFFFFF;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--slate);overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(245,247,246,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,115,119,.1);}
+  .nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+  .nav-wordmark{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--teal-dark);}
+  .nav-back{font-size:.85rem;font-weight:500;color:var(--slate-mid);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--teal);}
+  .nav-cta{background:var(--teal);color:var(--white);padding:.6rem 1.4rem;border-radius:4px;font-size:.875rem;font-weight:600;text-decoration:none;transition:background .2s;}
+  .nav-cta:hover{background:var(--teal-dark);}
+  .hero{min-height:70vh;background:var(--teal-dark);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:10rem 4rem 6rem;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(20,168,173,.25) 0%,transparent 60%);}
+  .hero-content{position:relative;z-index:1;max-width:700px;}
+  .hero-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+  .hero-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold);}
+  .hero-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.03em;line-height:1.06;color:var(--white);margin-bottom:1.5rem;}
+  .hero-h1 span{color:var(--gold);}
+  .hero-sub{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.65);font-weight:300;margin-bottom:2.5rem;}
+  .btn-primary{background:var(--gold);color:var(--teal-dark);padding:.95rem 2rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;display:inline-block;}
+  .btn-primary:hover{background:#d4b87a;transform:translateY(-1px);}
+  .section{padding:6rem 4rem;}
+  .section-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+  .section-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold);}
+  .section-h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-.025em;color:var(--teal-dark);line-height:1.1;margin-bottom:1rem;}
+  .section-sub{font-size:1rem;line-height:1.8;color:var(--slate-mid);font-weight:300;max-width:600px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+  .body-text p{font-size:1rem;line-height:1.85;color:var(--slate-mid);font-weight:300;margin-bottom:1.25rem;}
+  .body-text p:last-child{margin-bottom:0;}
+  .stat-cards{display:flex;flex-direction:column;gap:1rem;}
+  .stat-card{background:var(--white);border:1px solid rgba(13,115,119,.1);border-radius:10px;padding:1.75rem;text-align:center;}
+  .stat-card .num{font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--teal-dark);line-height:1;}
+  .stat-card .lbl{font-size:.72rem;color:var(--slate-light);letter-spacing:.08em;text-transform:uppercase;margin-top:.35rem;}
+  .benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+  .benefit-card{background:var(--warm-white);border:1px solid rgba(13,115,119,.08);border-radius:10px;padding:2rem;border-top:3px solid var(--gold);}
+  .benefit-icon{font-size:1.75rem;margin-bottom:1rem;}
+  .benefit-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--teal-dark);margin-bottom:.5rem;}
+  .benefit-desc{font-size:.875rem;line-height:1.7;color:var(--slate-mid);font-weight:300;}
+  .process-steps{display:flex;flex-direction:column;gap:1.5rem;margin-top:3rem;max-width:700px;}
+  .step{display:flex;gap:1.5rem;align-items:flex-start;}
+  .step-num{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:rgba(13,115,119,.15);line-height:1;flex-shrink:0;width:48px;}
+  .step-content h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--teal-dark);margin-bottom:.4rem;}
+  .step-content p{font-size:.875rem;line-height:1.7;color:var(--slate-mid);font-weight:300;}
+  .cta-band{background:var(--teal-dark);padding:6rem 4rem;text-align:center;position:relative;overflow:hidden;}
+  .cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(20,168,173,.2) 0%,transparent 65%);}
+  .cta-band-content{position:relative;z-index:1;}
+  .cta-band h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--white);letter-spacing:-.025em;margin-bottom:1rem;}
+  .cta-band p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.6);font-weight:300;max-width:500px;margin:0 auto 2.5rem;}
+  .form-row{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;max-width:480px;margin:0 auto;}
+  .form-input{flex:1;min-width:220px;padding:.9rem 1.25rem;border:1.5px solid rgba(255,255,255,.2);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.95rem;background:rgba(255,255,255,.06);color:var(--white);outline:none;transition:border-color .2s;}
+  .form-input:focus{border-color:rgba(255,255,255,.5);}
+  .form-input::placeholder{color:rgba(255,255,255,.3);}
+  footer{background:var(--slate);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+  .footer-mark{display:flex;align-items:center;gap:.5rem;}
+  .footer-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--white);letter-spacing:-.02em;}
+  .footer-copy{font-size:.75rem;color:rgba(255,255,255,.3);}
+  .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+  @media(max-width:900px){nav{padding:1rem 1.5rem;}.hero{padding:8rem 1.5rem 4rem;}.section{padding:4rem 1.5rem;}.two-col{grid-template-columns:1fr;gap:2.5rem;}.benefits-grid{grid-template-columns:1fr;}.cta-band{padding:4rem 1.5rem;}footer{padding:2rem 1.5rem;flex-direction:column;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="28" height="34" viewBox="0 0 50 62" fill="none">
+      <line x1="12" y1="4" x2="12" y2="58" stroke="#085255" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="56" stroke="#085255" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-wordmark">Kinelion</span>
+  </a>
+  <a href="index.html" class="nav-back">Back to Home</a>
+  <a href="#partner" class="nav-cta">Become a Partner</a>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Hospital Partners</div>
+    <h1 class="hero-h1">Your patients deserve <span>better tools.</span> So do you.</h1>
+    <p class="hero-sub">Rehabilitation hospitals have always been at the forefront of patient recovery. Kinelion is here to make sure the adaptive equipment in your facility matches the standard of care your team delivers every single day.</p>
+    <a href="#partner" class="btn-primary">Request a Partnership</a>
+  </div>
+</section>
+<section class="section two-col" style="background:var(--white);">
+  <div class="body-text fade-up">
+    <div class="section-eyebrow">The Gap We Are Closing</div>
+    <h2 class="section-h2">World class care. Underserved tools.</h2>
+    <p>Rehabilitation hospitals invest heavily in their clinical teams, their facilities, and their patient programs. And yet the adaptive equipment available to support that care has not kept pace. Products that look clinical, feel limiting, and were designed without real input from the people who use them or the clinicians who prescribe them.</p>
+    <p>That gap has a real cost. It affects patient outcomes, extends recovery timelines, and places an unnecessary burden on occupational therapists and rehabilitation specialists who are already working at the edge of their capacity.</p>
+    <p>Kinelion was built to close that gap. Not with another catalog of clinical products but with a premium adaptive ecosystem designed in direct collaboration with occupational therapy specialists and informed by lived tetraplegic experience.</p>
+  </div>
+  <div class="stat-cards fade-up">
+    <div class="stat-card"><div class="num">1 in 50</div><div class="lbl">Americans lives with paralysis</div></div>
+    <div class="stat-card"><div class="num">40B+</div><div class="lbl">US adaptive equipment market</div></div>
+    <div class="stat-card"><div class="num">OT</div><div class="lbl">Co-designed with specialists</div></div>
+  </div>
+</section>
+<section class="section" style="background:var(--warm-white);">
+  <div class="section-eyebrow">Why Partner With Kinelion</div>
+  <h2 class="section-h2">Built for clinical environments.</h2>
+  <p class="section-sub">Every Kinelion product is engineered for the demands of an inpatient rehabilitation setting. Durable, sterilizable, and designed to integrate seamlessly into existing OT programs.</p>
+  <div class="benefits-grid">
+    <div class="benefit-card fade-up"><div class="benefit-icon">🏥</div><div class="benefit-title">Clinical Grade Materials</div><p class="benefit-desc">Medical grade materials designed for high rotation clinical environments. Sterilizable, durable, and built to withstand the demands of daily therapeutic use.</p></div>
+    <div class="benefit-card fade-up"><div class="benefit-icon">🩺</div><div class="benefit-title">OT Integration Ready</div><p class="benefit-desc">Kinelion products are designed to integrate directly into occupational therapy programs. Our clinical team works with your OT department to ensure seamless adoption.</p></div>
+    <div class="benefit-card fade-up"><div class="benefit-icon">📋</div><div class="benefit-title">Founding Partner Benefits</div><p class="benefit-desc">Hospitals that partner with Kinelion at this stage receive preferred institutional pricing, early product access, and direct input into our clinical development roadmap.</p></div>
+    <div class="benefit-card fade-up"><div class="benefit-icon">🔬</div><div class="benefit-title">Clinical Evaluation Program</div><p class="benefit-desc">We provide product samples for structured clinical evaluation before any commitment. Your OT team tests, your patients use, and you decide based on real outcomes.</p></div>
+    <div class="benefit-card fade-up"><div class="benefit-icon">📦</div><div class="benefit-title">Modular Ecosystem</div><p class="benefit-desc">The Kinelion One platform accepts interchangeable modules for different therapy goals. One base unit serves gym, kitchen, daily living, and work applications.</p></div>
+    <div class="benefit-card fade-up"><div class="benefit-icon">🤝</div><div class="benefit-title">Dedicated Support</div><p class="benefit-desc">Every hospital partner receives a dedicated Kinelion contact. Questions, clinical guidance, and product support are always one call away.</p></div>
+  </div>
+</section>
+<section class="section" style="background:var(--white);">
+  <div class="section-eyebrow">How It Works</div>
+  <h2 class="section-h2">From conversation to clinical partnership.</h2>
+  <p class="section-sub">We keep the process simple. No lengthy procurement cycles before you have seen the product in action.</p>
+  <div class="process-steps">
+    <div class="step fade-up"><div class="step-num">01</div><div class="step-content"><h3>Initial Conversation</h3><p>We connect with your OT department head or Director of Rehab Services to understand your patient population, your current adaptive toolkit, and where the gaps are.</p></div></div>
+    <div class="step fade-up"><div class="step-num">02</div><div class="step-content"><h3>Clinical Evaluation</h3><p>We provide product samples at no cost for a structured evaluation period. Your OT team works with patients using Kinelion products and documents outcomes.</p></div></div>
+    <div class="step fade-up"><div class="step-num">03</div><div class="step-content"><h3>Partnership Agreement</h3><p>Based on evaluation outcomes we establish an institutional partnership with preferred pricing, supply commitments, and ongoing clinical support.</p></div></div>
+    <div class="step fade-up"><div class="step-num">04</div><div class="step-content"><h3>Ongoing Collaboration</h3><p>Founding hospital partners have direct input into Kinelion product development. Your clinical insights shape the next generation of our adaptive ecosystem.</p></div></div>
+  </div>
+</section>
+<section class="cta-band" id="partner">
+  <div class="cta-band-content">
+    <h2>Ready to bring Kinelion into your facility?</h2>
+    <p>Leave your institutional email and we will be in touch within 48 hours to schedule an initial conversation with your rehabilitation team.</p>
+    <div class="form-row">
+      <input type="email" class="form-input" placeholder="Your institutional email address">
+      <button class="btn-primary">Request Partnership</button>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-mark">
+    <svg width="22" height="28" viewBox="0 0 50 62" fill="none">
+      <line x1="12" y1="4" x2="12" y2="58" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="56" stroke="white" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <span class="footer-name">Kinelion</span>
+  </div>
+  <p class="footer-copy">2026 Kinelion. All rights reserved.</p>
+</footer>
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 120); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  window.addEventListener('scroll', () => { document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(0,0,0,.08)' : 'none'; });
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinelion: Press and Media</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root{--teal:#0D7377;--teal-light:#14A8AD;--teal-dark:#085255;--slate:#2E3A45;--slate-mid:#4A5A68;--slate-light:#8A9BAA;--gold:#C8A96E;--warm-white:#F5F7F6;--white:#FFFFFF;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--slate);overflow-x:hidden;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 4rem;background:rgba(245,247,246,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,115,119,.1);}
+  .nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;}
+  .nav-wordmark{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--teal-dark);}
+  .nav-back{font-size:.85rem;font-weight:500;color:var(--slate-mid);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--teal);}
+  .nav-cta{background:var(--teal);color:var(--white);padding:.6rem 1.4rem;border-radius:4px;font-size:.875rem;font-weight:600;text-decoration:none;transition:background .2s;}
+  .nav-cta:hover{background:var(--teal-dark);}
+  .hero{min-height:60vh;background:var(--teal-dark);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:10rem 4rem 6rem;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(20,168,173,.25) 0%,transparent 60%);}
+  .hero-content{position:relative;z-index:1;max-width:700px;}
+  .hero-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+  .hero-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold);}
+  .hero-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:-.03em;line-height:1.06;color:var(--white);margin-bottom:1.5rem;}
+  .hero-h1 span{color:var(--gold);}
+  .hero-sub{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,.65);font-weight:300;}
+  .section{padding:6rem 4rem;}
+  .section-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+  .section-eyebrow::before{content:'';display:block;width:20px;height:2px;background:var(--gold);}
+  .section-h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-.025em;color:var(--teal-dark);line-height:1.1;margin-bottom:1rem;}
+  .section-sub{font-size:1rem;line-height:1.8;color:var(--slate-mid);font-weight:300;max-width:600px;}
+  .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+  .body-text p{font-size:1rem;line-height:1.85;color:var(--slate-mid);font-weight:300;margin-bottom:1.25rem;}
+  .body-text p:last-child{margin-bottom:0;}
+  .pull-quote{border-left:3px solid var(--gold);padding:1.5rem 2rem;margin:2rem 0;background:rgba(200,169,110,.06);border-radius:0 8px 8px 0;}
+  .pull-quote p{font-family:'Syne',sans-serif;font-weight:600;font-size:1.1rem;line-height:1.5;color:var(--teal-dark);margin:0;}
+  .facts-card{background:var(--teal-dark);border-radius:12px;padding:2.5rem;}
+  .facts-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-light);margin-bottom:1.5rem;}
+  .fact-item{display:flex;flex-direction:column;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.08);}
+  .fact-item:last-child{border-bottom:none;}
+  .fact-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.25rem;}
+  .fact-value{font-size:.95rem;color:var(--white);font-weight:400;line-height:1.5;}
+  .assets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+  .asset-card{background:var(--warm-white);border:1px solid rgba(13,115,119,.08);border-radius:10px;padding:2rem;text-align:center;}
+  .asset-icon{font-size:2rem;margin-bottom:1rem;}
+  .asset-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--teal-dark);margin-bottom:.4rem;}
+  .asset-desc{font-size:.82rem;line-height:1.6;color:var(--slate-mid);font-weight:300;margin-bottom:1rem;}
+  .asset-btn{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);border:1.5px solid rgba(13,115,119,.3);padding:.4rem 1rem;border-radius:4px;text-decoration:none;transition:border-color .2s,background .2s;}
+  .asset-btn:hover{border-color:var(--teal);background:rgba(13,115,119,.04);}
+  .contact-band{background:var(--teal-dark);padding:6rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;overflow:hidden;}
+  .contact-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(20,168,173,.2) 0%,transparent 60%);}
+  .contact-text{position:relative;z-index:1;}
+  .contact-text h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3vw,2.4rem);color:var(--white);letter-spacing:-.025em;margin-bottom:1rem;}
+  .contact-text p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.65);font-weight:300;}
+  .contact-form-card{position:relative;z-index:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:2.5rem;backdrop-filter:blur(8px);}
+  .form-field{margin-bottom:1rem;}
+  .form-input{width:100%;padding:.85rem 1rem;border:1.5px solid rgba(255,255,255,.15);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.9rem;background:rgba(255,255,255,.06);color:var(--white);outline:none;transition:border-color .2s;}
+  .form-input:focus{border-color:rgba(255,255,255,.4);}
+  .form-input::placeholder{color:rgba(255,255,255,.3);}
+  .form-select{width:100%;padding:.85rem 1rem;border:1.5px solid rgba(255,255,255,.15);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.9rem;background:rgba(8,82,85,.8);color:rgba(255,255,255,.7);outline:none;cursor:pointer;}
+  .btn-gold{width:100%;background:var(--gold);color:var(--teal-dark);padding:.95rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;cursor:pointer;margin-top:.5rem;transition:background .2s;}
+  .btn-gold:hover{background:#d4b87a;}
+  footer{background:var(--slate);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+  .footer-mark{display:flex;align-items:center;gap:.5rem;}
+  .footer-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--white);letter-spacing:-.02em;}
+  .footer-copy{font-size:.75rem;color:rgba(255,255,255,.3);}
+  .fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+  @media(max-width:900px){nav{padding:1rem 1.5rem;}.hero{padding:8rem 1.5rem 4rem;}.section{padding:4rem 1.5rem;}.story-grid,.contact-band{grid-template-columns:1fr;gap:2.5rem;}.assets-grid{grid-template-columns:1fr;}.contact-band{padding:4rem 1.5rem;}footer{padding:2rem 1.5rem;flex-direction:column;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="28" height="34" viewBox="0 0 50 62" fill="none">
+      <line x1="12" y1="4" x2="12" y2="58" stroke="#085255" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="56" stroke="#085255" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <span class="nav-wordmark">Kinelion</span>
+  </a>
+  <a href="index.html" class="nav-back">Back to Home</a>
+  <a href="#contact" class="nav-cta">Contact Press Team</a>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Press and Media</div>
+    <h1 class="hero-h1">A story the adaptive industry <span>has never told.</span></h1>
+    <p class="hero-sub">Kinelion is founded by a tetraplegic athlete who spent years frustrated by adaptive equipment that failed him, then built something better himself. This is a company with a story worth telling. We welcome media inquiries, interview requests, and feature opportunities.</p>
+  </div>
+</section>
+<section class="section" style="background:var(--white);">
+  <div class="story-grid">
+    <div class="body-text fade-up">
+      <div class="section-eyebrow">The Kinelion Story</div>
+      <h2 class="section-h2">Built from the inside out.</h2>
+      <p>Victor Landing has lived with tetraplegia for over a decade. Before his diagnosis he founded a private personal training practice where he worked with executives, artists, and professionals through a philosophy of functional programming: addressing what the body truly needs, not just what the client asks for.</p>
+      <p>When the adaptive equipment market failed to keep pace with his active lifestyle, he built his own solutions. A wrist strap with a hook. A cable attachment for the gym. Each prototype broke. Each one got rebuilt stronger. That process became the foundation of Kinelion.</p>
+      <div class="pull-quote">
+        <p>"Founded by a tetraplegic athlete who got tired of waiting for the right adaptive equipment to exist, so he built it himself."</p>
+      </div>
+      <p>Kinelion is the company the adaptive equipment industry has needed for decades. A premium performance brand built by someone who uses adaptive equipment every single day, designed with occupational therapy specialists, and grounded in one belief: independence is not a luxury. It is a right.</p>
+    </div>
+    <div class="facts-card fade-up">
+      <div class="facts-title">Quick Facts</div>
+      <div class="fact-item"><span class="fact-label">Company</span><span class="fact-value">Kinelion</span></div>
+      <div class="fact-item"><span class="fact-label">Founded</span><span class="fact-value">2026</span></div>
+      <div class="fact-item"><span class="fact-label">Founder</span><span class="fact-value">Victor Landing, tetraplegic athlete and former personal training practice founder</span></div>
+      <div class="fact-item"><span class="fact-label">Mission</span><span class="fact-value">To build the world's leading adaptive equipment ecosystem for people with limited hand dexterity</span></div>
+      <div class="fact-item"><span class="fact-label">Flagship Product</span><span class="fact-value">Kinelion One: a modular adaptive platform with universal magnetic docking system</span></div>
+      <div class="fact-item"><span class="fact-label">Market</span><span class="fact-value">B2B institutional. Rehabilitation hospitals, OT and PT clinics, long-term care facilities</span></div>
+      <div class="fact-item"><span class="fact-label">Website</span><span class="fact-value">kinelion.com</span></div>
+    </div>
+  </div>
+</section>
+<section class="section" style="background:var(--warm-white);">
+  <div class="section-eyebrow">Media Assets</div>
+  <h2 class="section-h2">Everything you need for your story.</h2>
+  <p class="section-sub">Brand assets, product visuals, and founder information available upon request. Contact our press team for high resolution files.</p>
+  <div class="assets-grid">
+    <div class="asset-card fade-up"><div class="asset-icon">🎨</div><div class="asset-title">Brand Assets</div><p class="asset-desc">Logo files, color palette, and brand guidelines in all formats. Available in SVG, PNG, and PDF.</p><a href="#contact" class="asset-btn">Request Assets</a></div>
+    <div class="asset-card fade-up"><div class="asset-icon">📸</div><div class="asset-title">Product Visuals</div><p class="asset-desc">High resolution product concept renders and brand imagery for editorial and digital use.</p><a href="#contact" class="asset-btn">Request Visuals</a></div>
+    <div class="asset-card fade-up"><div class="asset-icon">🎤</div><div class="asset-title">Founder Interview</div><p class="asset-desc">Victor Landing is available for interviews, podcast appearances, and speaking opportunities on adaptive technology and disability entrepreneurship.</p><a href="#contact" class="asset-btn">Request Interview</a></div>
+  </div>
+</section>
+<section class="contact-band" id="contact">
+  <div class="contact-text">
+    <h2>Get in touch with our press team.</h2>
+    <p>For media inquiries, interview requests, product information, and brand assets. We respond to all press inquiries within 24 hours.</p>
+  </div>
+  <div class="contact-form-card">
+    <div class="form-field"><input type="text" class="form-input" placeholder="Your name"></div>
+    <div class="form-field"><input type="text" class="form-input" placeholder="Publication or outlet"></div>
+    <div class="form-field"><input type="email" class="form-input" placeholder="Your email address"></div>
+    <div class="form-field">
+      <select class="form-select">
+        <option value="" disabled selected>Type of inquiry</option>
+        <option>Feature story</option>
+        <option>Founder interview</option>
+        <option>Product information</option>
+        <option>Brand assets</option>
+        <option>Podcast appearance</option>
+        <option>Speaking opportunity</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <button class="btn-gold">Send Inquiry</button>
+  </div>
+</section>
+<footer>
+  <div class="footer-mark">
+    <svg width="22" height="28" viewBox="0 0 50 62" fill="none">
+      <line x1="12" y1="4" x2="12" y2="58" stroke="white" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="8" stroke="#C8A96E" stroke-width="8" stroke-linecap="round"/>
+      <line x1="12" y1="32" x2="44" y2="56" stroke="white" stroke-width="8" stroke-linecap="round"/>
+    </svg>
+    <span class="footer-name">Kinelion</span>
+  </div>
+  <p class="footer-copy">2026 Kinelion. All rights reserved.</p>
+</footer>
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 120); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  window.addEventListener('scroll', () => { document.querySelector('nav').style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(0,0,0,.08)' : 'none'; });
+</script>
+</body>
+</html>
